@@ -1,0 +1,36 @@
+1
+00:00:00,000 --> 00:00:04,000
+Session started
+"Hello, Grace friend."
+Illustrated sound preview - not a live host recording
+
+2
+00:00:04,000 --> 00:00:08,000
+Approval needed
+"What problem, question?"
+Illustrated sound preview - not a live host recording
+
+3
+00:00:08,000 --> 00:00:13,000
+Destructive command
+"We die. We die. We die."
+Illustrated sound preview - not a live host recording
+
+4
+00:00:13,000 --> 00:00:17,000
+Turn finished
+"Amaze! Amaze! Amaze!"
+Illustrated sound preview - not a live host recording
+
+5
+00:00:17,000 --> 00:00:22,000
+Usage limit reached
+"Not enough. Not enough."
+Illustrated sound preview - not a live host recording
+
+6
+00:00:22,000 --> 00:00:27,000
+Fist my bump.
+Local audio. No telemetry.
+Never approves or blocks anything.
+Illustrated sound preview - not a live host recording

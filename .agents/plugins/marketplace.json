@@ -1,0 +1,12 @@
+{
+  "name": "agent-rocky",
+  "interface": { "displayName": "Agent Rocky" },
+  "plugins": [
+    {
+      "name": "rocky",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

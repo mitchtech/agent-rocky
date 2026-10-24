@@ -1,0 +1,82 @@
+{
+  "kind": "illustrated-previews",
+  "dimensions": [
+    1080,
+    1080
+  ],
+  "fps": 15,
+  "sources": [
+    {
+      "path": "audio/amaze-amaze-amaze.wav",
+      "bytes": 85338,
+      "sha256": "91afcf15f2b9ff1740fa4c266ecdc91e580198b27ec405a796f9430a4c2f13a0"
+    },
+    {
+      "path": "audio/fist-my-bump.wav",
+      "bytes": 115244,
+      "sha256": "b429f32873a99289cdd5e164f786599049dd13750687680190c652ba9441857a"
+    },
+    {
+      "path": "audio/hello-grace-friend.wav",
+      "bytes": 56650,
+      "sha256": "a04ee520b65b73635a1ecc00d54f61edefaae7348d7ad098f923202758be6097"
+    },
+    {
+      "path": "audio/not-enough.wav",
+      "bytes": 64044,
+      "sha256": "eec5fed209e977baffb9c94297f12309852c59e4baa508a3c6e4cc97181a1357"
+    },
+    {
+      "path": "audio/we-die.wav",
+      "bytes": 169644,
+      "sha256": "f9c19a8b95f19dc09f560f85b92dba85c201ff31cde18fe63672d86400687fbd"
+    },
+    {
+      "path": "audio/what-problem.wav",
+      "bytes": 96044,
+      "sha256": "13e5b73b3965ebb77df39da2029e1baf97b8f19f13fb5ad77a57f6d31ae7a3a9"
+    },
+    {
+      "path": "site/fonts/space-grotesk-latin-700-normal.woff2",
+      "bytes": 12840,
+      "sha256": "35f8aec56cfd5cbfdb03cc68733a54a0b05bb3617ffcd5fd332badc0b045ca55"
+    },
+    {
+      "path": "site/fonts/ibm-plex-sans-latin-400-normal.woff2",
+      "bytes": 22588,
+      "sha256": "3b646991d30055a93a4ecc499713d4347953a74a947ecab435ab72070cbdab0e"
+    },
+    {
+      "path": "site/fonts/ibm-plex-mono-latin-400-normal.woff2",
+      "bytes": 14708,
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "assets/promotion/sound-preview.mp4",
+      "bytes": 392729,
+      "sha256": "2925ec3730ca9f08ac39dda428bb7171bb6ff2c4fbcfbaa1c08259a0ea65fc06"
+    },
+    {
+      "path": "assets/promotion/sound-preview.png",
+      "bytes": 85415,
+      "sha256": "155be2fa65ce034085ca5efcf06bedc1298ae3a8711ee6ac1cc1ebeae8c8ca63"
+    },
+    {
+      "path": "assets/promotion/sound-preview.srt",
+      "bytes": 807,
+      "sha256": "db7f90f4dad3e8a2eb7153cedbd97b79a3708efbc98f1d82f9d4457146f780d6"
+    }
+  ],
+  "tools": {
+    "Pillow": "12.3.0",
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "credentials_used": [],
+  "limitations": [
+    "Not a live host or physical audio recording.",
+    "No claim of hook execution in these videos.",
+    "Audio is assembled from the bundled, separately noticed Project Hail Mary clips."
+  ]
+}

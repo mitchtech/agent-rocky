@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mitchtech.github.io/agent-rocky/sitemap.xml
