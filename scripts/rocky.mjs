@@ -44,6 +44,7 @@ export const DEFAULTS = {
   audioDir: null,
   cooldownMs: 1000,
   astrophage: { budgetUsd: null, lowPercent: 80 },
+  memory: { lowPercent: 85 },
   easterEgg: { chance: 0.02, clips: ['purr', 'singing', 'song', 'six-seven'] },
   events: {
     session_started: { enabled: true, clips: ['hello-grace-friend', 'hello-grace', 'hi-grace', 'i-am-rocky', 'can-hear'] },
@@ -59,6 +60,7 @@ export const DEFAULTS = {
     out_of_astrophage: { enabled: true, clips: ['not-enough', 'eridian-sad'] },
     astrophage_low: { enabled: true, clips: ['how-much-astrophage'] },
     out_of_xenonite: { enabled: true, clips: ['too-much'] },
+    memory_full: { enabled: true, clips: ['cant-forget'] },
     error: { enabled: false, clips: ['bad-bad-bad', 'eridian-sad'] },
     tool_failed: { enabled: false, clips: ['could-not-fix', 'dirty-dirty-dirty'] },
     subagent_started: { enabled: false, clips: ['saves-stars', 'build-workshop', 'eridian-greet'] },
@@ -66,7 +68,7 @@ export const DEFAULTS = {
     session_ended: { enabled: false, clips: ['grace-go-home', 'we-go-home', 'thank-you'] },
   },
 };
-const ATTENTION = ['approval_required', 'input_required', 'ready_for_input', 'out_of_astrophage', 'astrophage_low', 'out_of_xenonite'];
+const ATTENTION = ['approval_required', 'input_required', 'ready_for_input', 'out_of_astrophage', 'astrophage_low', 'out_of_xenonite', 'memory_full'];
 
 export function dangerous(command) {
   return typeof command === 'string' && DANGER.some(pattern => pattern.test(command));
@@ -104,6 +106,12 @@ export function configuration(env = process.env) {
     Object.assign(config.astrophage, overrides.astrophage);
     const { budgetUsd, lowPercent } = config.astrophage;
     if ((budgetUsd !== null && (!Number.isFinite(budgetUsd) || budgetUsd <= 0)) || !Number.isFinite(lowPercent) || lowPercent <= 0 || lowPercent >= 100) throw new Error('Invalid astrophage settings');
+  }
+  if (Object.hasOwn(overrides, 'memory')) {
+    if (!object(overrides.memory) || Object.keys(overrides.memory).some(key => !Object.hasOwn(config.memory, key))) throw new Error('Invalid memory settings');
+    Object.assign(config.memory, overrides.memory);
+    const { lowPercent } = config.memory;
+    if (!Number.isFinite(lowPercent) || lowPercent <= 0 || lowPercent >= 100) throw new Error('Invalid memory settings');
   }
   if (Object.hasOwn(overrides, 'easterEgg')) {
     if (!object(overrides.easterEgg) || Object.keys(overrides.easterEgg).some(key => !Object.hasOwn(config.easterEgg, key))) throw new Error('Invalid easterEgg settings');
@@ -182,6 +190,7 @@ function printRules(config) {
   for (const [event, rule] of Object.entries(config.events)) console.log(`${event}: ${rule.enabled ? rule.clips.join('/') : 'off'}`);
   console.log(`easter-egg: ${eggs(config)}`);
   console.log(`astrophage: ${config.astrophage.budgetUsd ? `$${config.astrophage.budgetUsd} budget` : 'rate limits'}, low at ${config.astrophage.lowPercent}%`);
+  console.log(`memory: full at ${config.memory.lowPercent}% of the context window`);
 }
 
 function eggs(config) {
@@ -324,15 +333,29 @@ export function fuel(input, config) {
   const level = tightest.percent >= 100 ? 2 : tightest.percent >= config.astrophage.lowPercent ? 1 : 0;
   const left = tightest.label === 'budget'
     ? `$${Math.max(0, config.astrophage.budgetUsd - cost).toFixed(2)}` : `${Math.max(0, Math.round(100 - tightest.percent))}%`;
-  return { ...tightest, level, text: `⬠ ${left} astrophage${tightest.label === 'budget' ? '' : ` (${tightest.label})`}${['', ' low', ' out'][level]}` };
+  return { kind: 'astrophage', ...tightest, level, text: `${left} astrophage${tightest.label === 'budget' ? '' : ` (${tightest.label})`}${['', ' low', ' out'][level]}` };
 }
 
-// Cue each rise in fuel level once per session. Falling back below a level, as when a window resets, re-arms it.
-export function fuelCue(meter, session, paths) {
-  const state = record(paths, 'statusline', session, 'astrophage');
+// Context window use as a percentage. Claude Code counts input tokens only.
+export function memory(input, config) {
+  const window = input?.context_window;
+  let percent = window?.used_percentage;
+  if (!Number.isFinite(percent) && Number.isFinite(window?.total_input_tokens) && window?.context_window_size > 0) {
+    percent = window.total_input_tokens / window.context_window_size * 100;
+  }
+  if (!Number.isFinite(percent)) return null;
+  const level = percent >= config.memory.lowPercent ? 1 : 0;
+  return { kind: 'memory', percent, level, text: `${Math.min(100, Math.max(0, Math.round(percent)))}% memory${level ? ' full' : ''}` };
+}
+
+const METER_CUES = { astrophage: ['', 'astrophage_low', 'out_of_astrophage'], memory: ['', 'memory_full'] };
+
+// Cue each rise in a meter's level once per session. Falling back below a level, as when a window resets or the context compacts, re-arms it.
+export function meterCue(meter, session, paths) {
+  const state = record(paths, 'statusline', session, meter.kind);
   const previous = Number.isInteger(state.value.level) ? state.value.level : 0;
   if (meter.level !== previous) state.save({ level: meter.level });
-  return meter.level > previous ? ['', 'astrophage_low', 'out_of_astrophage'][meter.level] : null;
+  return meter.level > previous ? METER_CUES[meter.kind][meter.level] : null;
 }
 
 export function playback(event, settings, options = {}) {
@@ -466,11 +489,12 @@ export async function main(argv = process.argv.slice(2)) {
       try {
         const payload = JSON.parse(input);
         const { config, paths } = configuration();
-        const meter = fuel(payload, config);
-        if (meter) {
-          text = meter.text;
+        const meters = [fuel(payload, config), memory(payload, config)].filter(Boolean);
+        if (meters.length) {
+          text = `⬠ ${meters.map(meter => meter.text).join(' · ')}`;
           const session = typeof payload.session_id === 'string' ? payload.session_id : 'default';
-          const cue = fuelCue(meter, session, paths);
+          // At most one cue per update; the Astrophage alarm outranks memory.
+          const cue = meters.map(meter => meterCue(meter, session, paths)).find(Boolean);
           if (cue && !config.muted && config.events[cue].enabled) schedule({ event: cue, agent: 'claude', session, change: false, danger: false, fallback: false });
         }
       } catch {}

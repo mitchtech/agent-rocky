@@ -48,8 +48,8 @@ Accept the hook consent prompt and restart Gemini.
 
 ## Running more than one Agent plugin
 
-Agent Navi, Agent Johnny 5, Agent Warcraft, and Agent Rocky respond to the same
-events. Enable one per host, for example
+Agent Navi, Agent Johnny 5, Agent Warcraft, Agent Star Wars, Agent StarCraft,
+and Agent Rocky respond to the same events. Enable one per host, for example
 `claude plugin disable warcraft@agent-warcraft`.
 
 ## Quieter setups

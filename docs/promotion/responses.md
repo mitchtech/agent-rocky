@@ -34,7 +34,7 @@ select Rocky in a compatible Codex host. Sounds and pet installation are indepen
 Rocky is the character people want to hear. Grace's voice would also make cues
 harder to tell apart from real speech around you.
 
-**Does it work with Navi, Johnny 5, or Warcraft installed?**
+**Does it work with Navi, Johnny 5, Warcraft, Star Wars, or StarCraft installed?**
 Yes, but they all respond to the same events. Enable one per host.
 
 **Does it send telemetry?**

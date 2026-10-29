@@ -18,6 +18,7 @@ are required beyond Node.js 22 or newer.
 | Out of Astrophage | `StopFailure`: rate_limit, billing_error, account_on_hold; `Notification.quota_auto_resume_disabled`; status-line meter at 100% | No native mapping | No native mapping | `play out_of_astrophage` |
 | Astrophage low | Status-line meter threshold | No native mapping | No native mapping | `play astrophage_low` |
 | Out of xenonite | `StopFailure`: max_output_tokens | No native mapping | No native mapping | `play out_of_xenonite` |
+| Memory full | Status-line memory gauge threshold | No native mapping | No native mapping | `play memory_full` |
 | Error | `StopFailure`, any other type, optional | No native mapping in this release | No native mapping | `play error` |
 | Tool failed | `PostToolUseFailure` (not interrupts), optional | No native mapping | Not registered | `play tool_failed` |
 | Subagent started | `SubagentStart`, optional | `SubagentStart`, optional | No native mapping | `play subagent_started` |

@@ -31,7 +31,7 @@ from his accounts.
 
 Primary audience: developers running local Claude Code or Codex sessions who
 loved the book or the film. Secondary audiences: users of Agent Navi, Agent
-Johnny 5, or Agent Warcraft who want a different voice, and people who want
+Johnny 5, Agent Warcraft, Agent Star Wars, or Agent StarCraft who want a different voice, and people who want
 quiet, non-verbal cues (the Eridian chords).
 
 Use one primary link per post:
