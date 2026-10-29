@@ -1,6 +1,6 @@
 {
   "name": "agent-rocky",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!",
   "type": "module",
   "bin": {
@@ -28,6 +28,7 @@
     "hooks",
     "docs",
     "CHANGELOG.md",
+    "assets/previews/icon.png",
     "assets/previews/banner-dark.png",
     "assets/previews/banner-light.png",
     "assets/previews/amaze-amaze-amaze.gif",

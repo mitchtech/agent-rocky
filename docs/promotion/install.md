@@ -46,11 +46,13 @@ Accept the hook consent prompt and restart Gemini.
 4. Over SSH, in containers, or in WSL, sound plays on the machine running the
    hook, not on your laptop.
 
-## Running more than one Agent plugin
+## Already using a sibling plugin?
 
-Agent Navi, Agent Johnny 5, Agent Warcraft, and Agent Rocky respond to the same
-events. Enable one per host, for example
-`claude plugin disable warcraft@agent-warcraft`.
+Agent Navi, Agent Johnny 5, Agent Warcraft, Agent Rocky, Agent Star Wars, and
+Agent StarCraft all answer the same events. Enable one per host. For example,
+`claude plugin disable warcraft@agent-warcraft` for Claude Code, or
+`enabled = false` under `[plugins."warcraft@agent-warcraft"]` in
+`~/.codex/config.toml` for Codex.
 
 ## Quieter setups
 

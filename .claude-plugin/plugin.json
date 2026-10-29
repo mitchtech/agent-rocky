@@ -1,7 +1,8 @@
 {
   "name": "rocky",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!",
+  "icon": "./assets/previews/icon.png",
   "author": {
     "name": "Michael J. Mitchell",
     "email": "michael@mitchtech.net",

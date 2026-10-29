@@ -195,6 +195,13 @@ draw.rounded_rectangle((6, 6, 173, 173), radius=28, fill=DARK["surface"] + (255,
 mark(touch, (90, 96), 64, DARK["ink"])
 touch.convert("RGB").save(OUT / "touch-icon.png")
 
+# The plugin listing icon: the touch icon's mark at the 512 px the Claude plugin validator asks for.
+listing = Image.new("RGBA", (512, 512), DARK["bg"] + (255,))
+draw = ImageDraw.Draw(listing, "RGBA")
+draw.rounded_rectangle((17, 17, 494, 494), radius=80, fill=DARK["surface"] + (255,), outline=PETROVA + (255,), width=11)
+mark(listing, (256, 273), 182, DARK["ink"])
+listing.convert("RGB").save(OUT / "icon.png")
+
 
 def frames_of(path):
     with Image.open(path) as image:

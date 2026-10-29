@@ -17,7 +17,9 @@
   <a href="https://github.com/mitchtech/agent-rocky/releases">Releases</a> ·
   <a href="https://github.com/mitchtech/agent-navi">Agent Navi</a> ·
   <a href="https://github.com/mitchtech/agent-johnny5">Agent Johnny 5</a> ·
-  <a href="https://github.com/mitchtech/agent-warcraft">Agent Warcraft</a>
+  <a href="https://github.com/mitchtech/agent-warcraft">Agent Warcraft</a> ·
+  <a href="https://github.com/mitchtech/agent-starwars">Agent Star Wars</a> ·
+  <a href="https://github.com/mitchtech/agent-starcraft">Agent StarCraft</a>
 </p>
 
 <table align="center">
@@ -53,8 +55,10 @@ have to go. It runs locally, sends no telemetry, and never approves or blocks
 an agent's actions.
 
 A sibling of [Agent Navi](https://github.com/mitchtech/agent-navi),
-[Agent Johnny 5](https://github.com/mitchtech/agent-johnny5), and
-[Agent Warcraft](https://github.com/mitchtech/agent-warcraft), inspired by
+[Agent Johnny 5](https://github.com/mitchtech/agent-johnny5),
+[Agent Warcraft](https://github.com/mitchtech/agent-warcraft),
+[Agent Star Wars](https://github.com/mitchtech/agent-starwars), and
+[Agent StarCraft](https://github.com/mitchtech/agent-starcraft), inspired by
 [thephw/claude-meseeks](https://github.com/thephw/claude-meseeks).
 
 ## Choose your setup
@@ -122,11 +126,12 @@ hook file is included in the generated extension, not the source root. Install
 published release assets rather than linking the repository root or a raw Git
 branch. See [Gemini integration](docs/gemini.md).
 
-### Running alongside the other Agent plugins
+### Running alongside the sibling plugins
 
-Agent Navi, Agent Johnny 5, Agent Warcraft, and Agent Rocky all respond to the
-same events. Enable one per host unless you want a fairy, a robot, a peon, and
-an Eridian talking over each other. For example,
+Agent Navi, Agent Johnny 5, Agent Warcraft, Agent Rocky, Agent Star Wars, and
+Agent StarCraft all respond to the same events. Enable one per host unless you
+want a fairy, a robot, a peon, an Eridian, two droids, and an SCV talking over
+each other. For example,
 `claude plugin disable warcraft@agent-warcraft` for Claude Code, or
 `enabled = false` under `[plugins."warcraft@agent-warcraft"]` in
 `~/.codex/config.toml` for Codex.
@@ -427,7 +432,7 @@ the project workflow.
 - *Project Hail Mary* (2021 novel): Andy Weir. *Project Hail Mary* (2026 film): Amazon MGM Studios. Rocky is voiced and performed by James Ortiz.
 - Film clip sources: Myinstants uploads and official clips and trailers published on YouTube by Amazon MGM Studios and Prime Video. See the [audio notice](audio/NOTICE.md).
 - Eridian chords: built from CC0 recordings on Freesound by NikoletB, alegemaate, Gorkovoy, dethrok, RebekahDay, and kvgarlic, following the film sound team's description of how Rocky's voice was made (Erik Aadahl and Ethan Van der Ryn).
-- Sibling projects: [Agent Navi](https://github.com/mitchtech/agent-navi), [Agent Johnny 5](https://github.com/mitchtech/agent-johnny5), and [Agent Warcraft](https://github.com/mitchtech/agent-warcraft).
+- Sibling projects: [Agent Navi](https://github.com/mitchtech/agent-navi), [Agent Johnny 5](https://github.com/mitchtech/agent-johnny5), [Agent Warcraft](https://github.com/mitchtech/agent-warcraft), [Agent Star Wars](https://github.com/mitchtech/agent-starwars), and [Agent StarCraft](https://github.com/mitchtech/agent-starcraft).
 - Original plugin inspiration: [thephw/claude-meseeks](https://github.com/thephw/claude-meseeks).
 
 Code and configuration: [MIT](LICENSE). Film audio is excluded from the
