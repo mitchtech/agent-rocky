@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Bundle original Rocky v2 pet artwork with nine animations and sixteen look directions, a byte-preserved source PNG, lossless WebP, CC BY 4.0 provenance, and a nine-row web export.
+- Replace the site's pet placeholder with animation and look-direction controls, pause/reduced-motion support, and installation links. Add reproducible pet previews and exercise real artwork in installer/package checks.
+
 ## 0.1.0 - 2026-10-24
 
 First release, built on the Agent Warcraft 0.3.0 runtime.

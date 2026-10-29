@@ -1,0 +1,18 @@
+{
+  "method": "Pillow lossless PNG-to-WebP encoding with exact RGBA preservation; no visual changes",
+  "source": {
+    "file": "assets/original/rocky/spritesheet.png",
+    "sha256": "0b7c5b299da30317494b9ef8135a3a692a33d06149e1ca2a355f054892518dd5"
+  },
+  "active": {
+    "pet.json": "ffd9d68018b078cc56657aa9dfce819ee9d866af3645e7f2af129a280319b9b3",
+    "spritesheet.webp": "0332a9b2cc8b5c35f4ed78daecd7004791a376aca9cb5d68f929d56e2b95a25d"
+  },
+  "decodedPixelsIdentical": true,
+  "occupiedCells": 73,
+  "transparentCells": 15,
+  "web": {
+    "file": "assets/exports/agent-rocky-pet-web.webp",
+    "sha256": "029b47aa50d3f60df3786307e32d81e2f131373a0cbabab1ea44255d5528e66f"
+  }
+}
