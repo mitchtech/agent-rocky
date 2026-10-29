@@ -101,8 +101,8 @@ I keep building small tools that make coding agents easier to work beside. The
 newest is Agent Rocky: sound cues from *Project Hail Mary* for Claude Code,
 Codex, and Gemini CLI.
 
-The engineering is the same as its siblings (Agent Navi, Agent Johnny 5, and
-Agent Warcraft): one dependency-free Node runtime, native hooks for each host,
+The engineering is the same as its siblings (Agent Navi, Agent Johnny 5, Agent
+Warcraft, Agent Star Wars, and Agent StarCraft): one dependency-free Node runtime, native hooks for each host,
 fail-open behavior, and no telemetry. Destructive-command detection runs inside
 the hook and only a yes/no flag leaves it.
 

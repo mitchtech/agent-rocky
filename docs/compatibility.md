@@ -18,6 +18,7 @@ are required beyond Node.js 22 or newer.
 | Out of Astrophage | `StopFailure`: rate_limit, billing_error, account_on_hold; `Notification.quota_auto_resume_disabled`; status-line meter at 100% | No native mapping | No native mapping | `play out_of_astrophage` |
 | Astrophage low | Status-line meter threshold | No native mapping | No native mapping | `play astrophage_low` |
 | Out of xenonite | `StopFailure`: max_output_tokens | No native mapping | No native mapping | `play out_of_xenonite` |
+| Memory full | Status-line memory gauge threshold | No native mapping | No native mapping | `play memory_full` |
 | Error | `StopFailure`, any other type, optional | No native mapping in this release | No native mapping | `play error` |
 | Tool failed | `PostToolUseFailure` (not interrupts), optional | No native mapping | Not registered | `play tool_failed` |
 | Subagent started | `SubagentStart`, optional | `SubagentStart`, optional | No native mapping | `play subagent_started` |
@@ -100,8 +101,7 @@ audio to your local speakers. This plugin does not deploy a relay or service.
 ## Native pet compatibility
 
 Sounds and pets install independently. The `rocky` plugin registers sound
-hooks only. The Rocky pet ships as a manifest-only stub in this release; once
-its art lands, it installs through the pet CLI or a ZIP as a local custom pet
+hooks only. The Rocky v2 artwork installs through the pet CLI or a ZIP as a local custom pet
 without hook registration or avatar selection changes. The host drives its
 activity and animation.
 
@@ -115,10 +115,10 @@ activity and animation.
 | Other agents and scripts | Generic event interface | Depends on host; no adapter provided |
 | Headless or remote environments | Requires local audio access | No local display is implied |
 
-Asset validation checks the manifest now and the atlas's format, transparency,
-and cell occupancy once it exists. Installer tests run against the stub and a
-fixture bundle and check filesystem behavior rather than native rendering on
-every OS. See the [pet guide](pets.md).
+Asset validation checks the manifest, atlas format, transparency, cell occupancy,
+and exact web-export pixels. Installer tests exercise the real artwork and
+fixture-isolated missing-art/conflict behavior. They check filesystem behavior
+rather than native rendering on every OS. See the [pet guide](pets.md).
 
 ## Validation and support baseline
 

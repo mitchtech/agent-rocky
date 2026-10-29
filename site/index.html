@@ -19,6 +19,7 @@
   <link rel="apple-touch-icon" href="previews/touch-icon.png">
   <link rel="preload" href="fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="pet/spritesheet.webp" as="image" type="image/webp">
   <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
@@ -77,6 +78,7 @@
         <div class="patch-row fuel" role="row"><code role="cell">out_of_astrophage</code><span role="cell">Rate limit, billing, or budget exhausted</span><span class="chips" role="cell"><button class="chip" data-clip="not-enough" data-line="Not enough. Not enough." data-event="out_of_astrophage" data-length="1.00">Not enough. Not enough.</button><button class="chip" data-clip="eridian-sad" data-line="(Eridian: a low minor chord)" data-event="out_of_astrophage" data-length="3.36">(Eridian: a low minor chord)</button></span><span role="cell" class="state on">On*</span></div>
         <div class="patch-row fuel" role="row"><code role="cell">astrophage_low</code><span role="cell">The status line meter crosses its threshold</span><span class="chips" role="cell"><button class="chip" data-clip="how-much-astrophage" data-line="How much Astrophage you need, question?" data-event="astrophage_low" data-length="2.30">How much Astrophage you need, question?</button></span><span role="cell" class="state on">On*</span></div>
         <div class="patch-row" role="row"><code role="cell">out_of_xenonite</code><span role="cell">A reply hits the output token limit</span><span class="chips" role="cell"><button class="chip" data-clip="too-much" data-line="Too much! Too much! Too much!" data-event="out_of_xenonite" data-length="1.00">Too much! Too much! Too much!</button></span><span role="cell" class="state on">On*</span></div>
+        <div class="patch-row fuel" role="row"><code role="cell">memory_full</code><span role="cell">The status line memory gauge crosses its threshold</span><span class="chips" role="cell"><button class="chip" data-clip="cant-forget" data-line="Rocky can&#x27;t forget." data-event="memory_full" data-length="2.20">Rocky can&#x27;t forget.</button></span><span role="cell" class="state on">On*</span></div>
         <div class="patch-row" role="row"><code role="cell">error</code><span role="cell">Claude Code stops on another API error</span><span class="chips" role="cell"><button class="chip" data-clip="bad-bad-bad" data-line="Bad, bad, bad." data-event="error" data-length="0.82">Bad, bad, bad.</button><button class="chip" data-clip="eridian-sad" data-line="(Eridian: a low minor chord)" data-event="error" data-length="3.36">(Eridian: a low minor chord)</button></span><span role="cell" class="state">Off</span></div>
         <div class="patch-row" role="row"><code role="cell">tool_failed</code><span role="cell">A tool call fails</span><span class="chips" role="cell"><button class="chip" data-clip="could-not-fix" data-line="Could not fix." data-event="tool_failed" data-length="2.30">Could not fix.</button><button class="chip" data-clip="dirty-dirty-dirty" data-line="Dirty, dirty, dirty." data-event="tool_failed" data-length="3.24">Dirty, dirty, dirty.</button></span><span role="cell" class="state">Off</span></div>
         <div class="patch-row" role="row"><code role="cell">subagent_started</code><span role="cell">A subagent starts work</span><span class="chips" role="cell"><button class="chip" data-clip="saves-stars" data-line="Grace Rocky save stars." data-event="subagent_started" data-length="2.70">Grace Rocky save stars.</button><button class="chip" data-clip="build-workshop" data-line="Rocky will build workshop here." data-event="subagent_started" data-length="2.05">Rocky will build workshop here.</button><button class="chip" data-clip="eridian-greet" data-line="(Eridian: a slowed birdsong greeting)" data-event="subagent_started" data-length="3.30">(Eridian: a slowed birdsong greeting)</button></span><span role="cell" class="state">Off</span></div>
@@ -90,13 +92,19 @@
     <section class="pet-section" id="pet" aria-labelledby="pet-title"><div class="wrap pet-grid">
       <div class="pet-copy">
         <p class="eyebrow">Codex pet</p>
-        <h2 id="pet-title">Rocky is <em>building it.</em></h2>
-        <p>A native Rocky pet for Codex desktop and Codex CLI is on the way. The installer, validation, and release packaging already ship, so the pet will arrive in a release without changing how anything else works.</p>
-        <p>Until then, <code>agent-rocky pet status</code> reports <code>not-bundled</code> and <code>agent-rocky pet install</code> changes nothing. Codex's native pet feature can make you a companion in the meantime. Pets and sounds stay independent either way.</p>
-        <div class="actions"><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/pets.md">Pet guide <span aria-hidden="true">↗</span></a></div>
+        <h2 id="pet-title">Your own <em>Eridian engineer.</em></h2>
+        <p>Five stone limbs, nine animations, and sixteen look directions. Rocky waves, works, waits for your input, and checks the result while Codex drives his activity.</p>
+        <p>Install him independently with <code>agent-rocky pet install</code>, then select Rocky in the desktop pet picker or a supported Codex CLI terminal. Sounds and pets stay independent.</p>
+        <div class="actions"><a class="button primary" href="#pet-install">Install Rocky <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/pets.md">Pet guide <span aria-hidden="true">↗</span></a></div>
+        <p class="fineprint"><a href="exports/agent-rocky-pet-web.webp" download>Download the web atlas</a> for a separate account upload. Original artwork: <a href="pet/NOTICE.md">CC BY 4.0</a>.</p>
       </div>
       <figure class="pet-stage">
-        <div class="stage-frame"><svg class="sigil huge" viewBox="0 0 64 64" role="img" aria-label="A pentagonal Eridian mark, standing in for the pet"><use href="#carapace"/></svg><p class="stage-note">Coming soon</p></div>
+        <div class="stage-frame"><div id="stage-sprite" class="sprite big" role="img" aria-label="Rocky, a five-limbed Eridian engineer with a pentagonal stone shell"></div></div>
+        <figcaption><output id="state-label">Rocky is idle</output><button id="motion-toggle" class="copy" aria-pressed="false">Pause animation</button></figcaption>
+        <div class="state-group" role="group" aria-label="Animations">
+          <button data-state="idle" aria-pressed="true">Idle</button><button data-state="working" aria-pressed="false">Working</button><button data-state="waiting" aria-pressed="false">Waiting</button><button data-state="review" aria-pressed="false">Review</button><button data-state="failure" aria-pressed="false">Blocked</button><button data-state="moving-right" aria-pressed="false">Move right</button><button data-state="moving-left" aria-pressed="false">Move left</button><button data-state="waving" aria-pressed="false">Wave</button><button data-state="jumping" aria-pressed="false">Jump</button>
+        </div>
+        <details class="look-group"><summary>Sixteen look directions</summary><div role="group" aria-label="Look directions"><button data-state="look-0" aria-pressed="false">Up</button><button data-state="look-1" aria-pressed="false">Up-right 1</button><button data-state="look-2" aria-pressed="false">Up-right 2</button><button data-state="look-3" aria-pressed="false">Up-right 3</button><button data-state="look-4" aria-pressed="false">Right</button><button data-state="look-5" aria-pressed="false">Down-right 1</button><button data-state="look-6" aria-pressed="false">Down-right 2</button><button data-state="look-7" aria-pressed="false">Down-right 3</button><button data-state="look-8" aria-pressed="false">Down</button><button data-state="look-9" aria-pressed="false">Down-left 1</button><button data-state="look-10" aria-pressed="false">Down-left 2</button><button data-state="look-11" aria-pressed="false">Down-left 3</button><button data-state="look-12" aria-pressed="false">Left</button><button data-state="look-13" aria-pressed="false">Up-left 1</button><button data-state="look-14" aria-pressed="false">Up-left 2</button><button data-state="look-15" aria-pressed="false">Up-left 3</button></div></details>
       </figure>
     </div></section>
 
@@ -115,11 +123,12 @@
     <section class="wrap fuel-section" aria-labelledby="fuel-title">
       <div class="fuel-copy"><p class="eyebrow">Usage alarms</p><h2 id="fuel-title">Not enough. <em>Not enough.</em></h2><p>Claude Code reports why a turn failed. Rate limits, billing errors, and accounts on hold play the Astrophage line. Hitting the output token limit plays "too much." An optional status-line meter shows how much of your tightest limit is left, and Rocky asks once when the tanks run low.</p><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/budget.md">Budget and status line guide <span aria-hidden="true">↗</span></a></div>
       <div class="ledger">
-        <div class="statusline" aria-label="Example status line"><span class="dim">~/project main</span><span>⬠ 18% astrophage (5h) <b>low</b></span></div>
+        <div class="statusline" aria-label="Example status line"><span class="dim">~/project main</span><span>⬠ 18% astrophage (5h) <b>low</b> · 88% memory <b>full</b></span></div>
         <ol class="ledger-rows">
           <li><code>rate_limit · billing_error · account_on_hold</code><span>out_of_astrophage</span><button class="chip" data-clip="not-enough" data-line="Not enough. Not enough." data-event="out_of_astrophage" data-length="1.00">Not enough. Not enough.</button></li>
           <li><code>max_output_tokens</code><span>out_of_xenonite</span><button class="chip" data-clip="too-much" data-line="Too much! Too much! Too much!" data-event="out_of_xenonite" data-length="1.00">Too much! Too much! Too much!</button></li>
           <li><code>status line ≥ 80%</code><span>astrophage_low</span><button class="chip" data-clip="how-much-astrophage" data-line="How much Astrophage you need, question?" data-event="astrophage_low" data-length="2.30">How much Astrophage you need, question?</button></li>
+          <li><code>context window ≥ 85%</code><span>memory_full</span><button class="chip" data-clip="cant-forget" data-line="Rocky can&#x27;t forget." data-event="memory_full" data-length="2.20">Rocky can&#x27;t forget.</button></li>
         </ol>
       </div>
     </section>
@@ -135,10 +144,12 @@ claude plugin install rocky@agent-rocky</code></pre></div>
 codex plugin add rocky@agent-rocky</code></pre></div>
         <div class="command"><div class="command-head"><h3>Gemini CLI</h3><button class="copy" data-copy="gemini-command" aria-label="Copy Gemini CLI command">Copy</button></div><pre id="gemini-command"><code>gemini extensions install https://github.com/mitchtech/agent-rocky</code></pre></div>
       </div>
-      <p class="fineprint">Review and trust the sound hooks in Codex's hook settings. Running Agent Navi, Agent Johnny 5, or Agent Warcraft too? Enable one per host so a fairy, a robot, a peon, and an Eridian do not talk over each other. <a href="https://github.com/mitchtech/agent-rocky/blob/main/README.md#other-agents">Other agents use the standalone event interface.</a></p>
+      <p class="fineprint">Review and trust the sound hooks in Codex's hook settings. Running another Agent plugin too (Navi, Johnny 5, Warcraft, Star Wars, or StarCraft)? Enable one per host so they do not talk over each other. <a href="https://github.com/mitchtech/agent-rocky/blob/main/README.md#other-agents">Other agents use the standalone event interface.</a></p>
       </div>
       <div id="pet-install" class="pet-install">
-        <div class="install-panel pet-card"><p class="eyebrow">Codex pet</p><h3>Coming soon</h3><p>The installer, validation, and packaging are ready; the art is not. Until it ships, <code>agent-rocky pet status</code> reports <code>not-bundled</code> and Codex's native pet feature can make you a companion. <a href="https://github.com/mitchtech/agent-rocky/releases">Watch the releases</a> for the pet.</p></div>
+        <div class="command pet-card"><div class="command-head"><h3>Install the Codex pet</h3><button class="copy" data-copy="pet-command" aria-label="Copy pet install command">Copy</button></div><pre id="pet-command"><code>npm install -g github:mitchtech/agent-rocky
+agent-rocky pet install
+agent-rocky doctor --pet</code></pre><p class="fineprint">These commands install the CLI and pet without enabling sound hooks. Prefer a standalone bundle? <a href="https://github.com/mitchtech/agent-rocky/releases/latest/download/agent-rocky-pet.zip">Download the pet ZIP</a> and extract its <code>rocky</code> directory into <code>~/.codex/pets/</code>. Then select Rocky in your host's pet picker. Installation never changes the selected pet.</p></div>
       </div>
       <div class="install-extra">
         <details class="install-panel"><summary>Sound controls</summary><pre id="control-command"><code>agent-rocky status
@@ -147,7 +158,7 @@ agent-rocky unmute subagent_started
 agent-rocky preset attention
 agent-rocky preview fist-my-bump
 agent-rocky unmute all</code></pre><button class="copy" data-copy="control-command" aria-label="Copy control examples">Copy</button><p>Or ask your agent to "mute Rocky" or "turn off amaze amaze amaze" through the bundled control skill. Global mute preserves your event preferences.</p></details>
-        <div class="install-panel"><p class="eyebrow">Status line</p><h3>Astrophage meter</h3><p>Point Claude Code's status line at <code>agent-rocky statusline</code> to see how much of your tightest limit is left, with a cue when it runs low. <a href="https://github.com/mitchtech/agent-rocky/blob/main/docs/budget.md">Setup guide</a>.</p></div>
+        <div class="install-panel"><p class="eyebrow">Status line</p><h3>Astrophage meter</h3><p>Point Claude Code's status line at <code>agent-rocky statusline</code> to see how much of your tightest limit and context window is left, with a cue when either runs low. <a href="https://github.com/mitchtech/agent-rocky/blob/main/docs/budget.md">Setup guide</a>.</p></div>
       </div>
       <p id="copy-status" class="fineprint" role="status" aria-live="polite"></p>
     </div></section>
@@ -155,7 +166,7 @@ agent-rocky unmute all</code></pre><button class="copy" data-copy="control-comma
     <section class="wrap compatibility" aria-labelledby="compatibility-title">
       <div class="compatibility-copy"><p class="eyebrow">Compatibility</p><h2 id="compatibility-title">Where it <em>plays.</em></h2><p>Sounds play on the machine that runs the hook, across agents and operating systems.</p><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/compatibility.md">Full compatibility guide <span aria-hidden="true">↗</span></a></div>
       <div class="table-scroll" tabindex="0" role="region" aria-labelledby="compatibility-title"><table><caption class="visually-hidden">Sound support by environment</caption><thead><tr><th scope="col">Environment</th><th scope="col">Sounds</th><th scope="col">Events</th></tr></thead><tbody>
-        <tr><th scope="row">Claude Code</th><td class="yes">Native hooks</td><td>All 15, plus the status-line meter</td></tr>
+        <tr><th scope="row">Claude Code</th><td class="yes">Native hooks</td><td>All 16, plus the status-line meter</td></tr>
         <tr><th scope="row">Codex CLI and desktop</th><td class="yes">Trusted hooks</td><td>Session, prompt, approval, completion, subagent, compaction, end</td></tr>
         <tr><th scope="row">Gemini CLI</th><td class="yes">Native extension</td><td>Session, prompt, approval, completion, compaction, end</td></tr>
         <tr><th scope="row">Other agents / scripts</th><td class="some">Event interface</td><td>Whatever you call</td></tr>
@@ -165,7 +176,7 @@ agent-rocky unmute all</code></pre><button class="copy" data-copy="control-comma
 
     <section class="wrap closing" aria-labelledby="closing-title"><svg class="sigil big" viewBox="0 0 64 64" aria-hidden="true"><use href="#carapace"/></svg><h2 id="closing-title">Fist <em>my bump.</em></h2><p>Keep building. Rocky will tell you when the work is done.</p><a class="button secondary" href="https://github.com/mitchtech/agent-rocky">Explore the project <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer class="wrap"><div><p class="footer-brand">Agent Rocky</p><p>Built by <a href="https://github.com/mitchtech">mitchtech</a>. Sibling of <a href="https://github.com/mitchtech/agent-navi">Agent Navi</a>, <a href="https://github.com/mitchtech/agent-johnny5">Agent Johnny 5</a>, and <a href="https://github.com/mitchtech/agent-warcraft">Agent Warcraft</a>. Code: MIT. Fonts: <a href="https://github.com/mitchtech/agent-rocky/blob/main/site/fonts/OFL.md">SIL OFL</a>.</p></div><div><p>Project Hail Mary: Andy Weir; film lines: Amazon MGM Studios. Eridian chords are built from CC0 recordings. <a href="https://github.com/mitchtech/agent-rocky/blob/main/audio/NOTICE.md">Audio rights notice</a>. Fan project, no affiliation.</p><p><a href="https://github.com/mitchtech/agent-rocky/issues">Report an issue</a><span aria-hidden="true"> · </span><a href="https://github.com/mitchtech/agent-rocky/releases">Releases</a></p></div></footer>
+  <footer class="wrap"><div><p class="footer-brand">Agent Rocky</p><p>Built by <a href="https://github.com/mitchtech">mitchtech</a>. Sibling of <a href="https://github.com/mitchtech/agent-navi">Agent Navi</a>, <a href="https://github.com/mitchtech/agent-johnny5">Agent Johnny 5</a>, <a href="https://github.com/mitchtech/agent-warcraft">Agent Warcraft</a>, <a href="https://github.com/mitchtech/agent-starwars">Agent Star Wars</a>, and <a href="https://github.com/mitchtech/agent-starcraft">Agent StarCraft</a>. Code: MIT. Fonts: <a href="https://github.com/mitchtech/agent-rocky/blob/main/site/fonts/OFL.md">SIL OFL</a>.</p></div><div><p>Project Hail Mary: Andy Weir; film lines: Amazon MGM Studios. Eridian chords are built from CC0 recordings. <a href="https://github.com/mitchtech/agent-rocky/blob/main/audio/NOTICE.md">Audio rights notice</a>. Fan project, no affiliation.</p><p><a href="https://github.com/mitchtech/agent-rocky/issues">Report an issue</a><span aria-hidden="true"> · </span><a href="https://github.com/mitchtech/agent-rocky/releases">Releases</a></p></div></footer>
   <svg width="0" height="0" class="visually-hidden" aria-hidden="true"><symbol id="carapace" viewBox="0 0 64 64"><path d="M32 6 56.7 24 47.3 53H16.7L7.3 24Z" fill="var(--carapace)" stroke="var(--carapace-edge)" stroke-width="2.5" stroke-linejoin="round"/><path d="M32 6v20M56.7 24 39 31M47.3 53 37 38M16.7 53 27 38M7.3 24 25 31" stroke="var(--carapace-edge)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/><g fill="var(--accent)"><rect x="22" y="30" width="3.2" height="10" rx="1.6"/><rect x="27.4" y="25" width="3.2" height="20" rx="1.6"/><rect x="32.8" y="22" width="3.2" height="26" rx="1.6"/><rect x="38.2" y="28" width="3.2" height="14" rx="1.6"/></g></symbol></svg>
 </body>
 </html>

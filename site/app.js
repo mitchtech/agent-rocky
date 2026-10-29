@@ -18,10 +18,50 @@ let activeButton;
 let raf = 0;
 let lastNotes = 0;
 
+// Codex v2 atlas rows: [row, frames, label, first column].
+const STATES = {
+  idle: [0, 6, 'idle'], 'moving-right': [1, 8, 'moving right'], 'moving-left': [2, 8, 'moving left'], waving: [3, 4, 'waving'],
+  jumping: [4, 5, 'jumping'], failure: [5, 8, 'blocked'], waiting: [6, 6, 'waiting for input'], working: [7, 6, 'working'], review: [8, 6, 'reviewing'],
+};
+const LOOKS = ['up', 'up-right 1', 'up-right 2', 'up-right 3', 'right', 'down-right 1', 'down-right 2', 'down-right 3',
+  'down', 'down-left 1', 'down-left 2', 'down-left 3', 'left', 'up-left 1', 'up-left 2', 'up-left 3'];
+LOOKS.forEach((name, direction) => { STATES[`look-${direction}`] = [9 + Math.floor(direction / 8), 1, `looking ${name}`, direction % 8]; });
+const stageSprite = document.querySelector('#stage-sprite');
+const stateLabel = document.querySelector('#state-label');
+const motionButton = document.querySelector('#motion-toggle');
+let stageState = 'idle';
+let petTimer;
+let petPaused = false;
+function renderPet() {
+  clearInterval(petTimer);
+  const [row, count, , start = 0] = STATES[stageState];
+  const scale = parseFloat(getComputedStyle(stageSprite).getPropertyValue('--scale')) || 1;
+  const draw = column => { stageSprite.style.backgroundPosition = `${-column * 192 * scale}px ${-row * 208 * scale}px`; };
+  let frame = 0;
+  draw(start);
+  if (!petPaused && !reducedMotion.matches && !document.hidden && count > 1) {
+    petTimer = setInterval(() => { frame = (frame + 1) % count; draw(frame); }, 160);
+  }
+  motionButton.disabled = reducedMotion.matches;
+  motionButton.textContent = reducedMotion.matches ? 'Reduced motion is on' : petPaused ? 'Resume animation' : 'Pause animation';
+  motionButton.setAttribute('aria-pressed', String(petPaused || reducedMotion.matches));
+}
+document.querySelectorAll('[data-state]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll('[data-state]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+  stageState = button.dataset.state;
+  stateLabel.textContent = `Rocky is ${STATES[stageState][2]}`;
+  renderPet();
+}));
+motionButton.addEventListener('click', () => { petPaused = !petPaused; renderPet(); });
+reducedMotion.addEventListener('change', renderPet);
+document.addEventListener('visibilitychange', renderPet);
+new ResizeObserver(renderPet).observe(stageSprite);
+renderPet();
+
 // Each cue tints the spectrum: Tau Ceti gold for success, Astrophage red for alarms, xenonite teal for greetings.
 const MOODS = {
   session_started: 'greet', prompt_submitted: 'work', annoyed: 'alarm', approval_required: 'question', input_required: 'question',
-  ready_for_input: 'hum', turn_completed: 'success', out_of_astrophage: 'alarm', astrophage_low: 'warn', out_of_xenonite: 'warn', error: 'alarm',
+  ready_for_input: 'hum', turn_completed: 'success', out_of_astrophage: 'alarm', astrophage_low: 'warn', out_of_xenonite: 'warn', memory_full: 'warn', error: 'alarm',
   tool_failed: 'alarm', subagent_started: 'greet', context_compacting: 'hum', session_ended: 'hum', 'easter-egg': 'success',
 };
 const mood = event => (event.includes('destructive') ? 'alarm' : MOODS[event.split(' ')[0]] || 'question');

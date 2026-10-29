@@ -32,9 +32,9 @@ root default hook file to Claude/Codex installations.
 
 `audio/` holds the canonical clips; `audio/sources.json` and
 `scripts/build-audio.py` record and reproduce them (ffmpeg required for
-rebuilds; yt-dlp for the YouTube sources). `pets/rocky` holds the manifest-only
-pet stub. Installer tests use `tests/fixtures/pet` for real-art, conflict, and
-missing-art behavior.
+rebuilds; yt-dlp for the YouTube sources). `pets/rocky` holds the v2
+artwork bundle. Installer tests exercise the real bundle and use
+`tests/fixtures/pet` to isolate conflict and missing-art behavior.
 `assets/previews` is generated from the clips by `scripts/build-assets.py`;
 keep preview generation reproducible.
 

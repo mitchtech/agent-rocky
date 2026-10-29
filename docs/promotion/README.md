@@ -31,7 +31,7 @@ from his accounts.
 
 Primary audience: developers running local Claude Code or Codex sessions who
 loved the book or the film. Secondary audiences: users of Agent Navi, Agent
-Johnny 5, or Agent Warcraft who want a different voice, and people who want
+Johnny 5, Agent Warcraft, Agent Star Wars, or Agent StarCraft who want a different voice, and people who want
 quiet, non-verbal cues (the Eridian chords).
 
 Use one primary link per post:
@@ -45,7 +45,7 @@ project is free to try, and invite one specific piece of feedback. Do not imply
 every host has identical events, that the destructive-command cue is a safety
 feature, or that a sound proves the agent completed a task successfully. Do
 not use film stills, posters, or trailer footage in posts; the spectrum preview
-and the site are the visuals. Do not promise a Codex pet date.
+and original pet artwork are the visuals. The optional Codex pet installs independently.
 
 ## Launch checks
 

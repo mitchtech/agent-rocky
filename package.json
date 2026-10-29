@@ -1,7 +1,7 @@
 {
   "name": "agent-rocky",
-  "version": "0.1.0",
-  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!",
+  "version": "0.2.0",
+  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, and an animated Codex pet. Amaze amaze amaze!",
   "type": "module",
   "bin": {
     "agent-rocky": "scripts/rocky.mjs"
@@ -28,6 +28,7 @@
     "hooks",
     "docs",
     "CHANGELOG.md",
+    "assets/previews/icon.png",
     "assets/previews/banner-dark.png",
     "assets/previews/banner-light.png",
     "assets/previews/amaze-amaze-amaze.gif",
@@ -36,6 +37,13 @@
     "assets/previews/not-enough.gif",
     "assets/previews/how-much-astrophage.gif",
     "assets/previews/eridian-question.gif",
+    "assets/previews/pet-idle.gif",
+    "assets/previews/pet-working.gif",
+    "assets/previews/pet-waiting.gif",
+    "assets/previews/pet-review.gif",
+    "assets/previews/pet-failure.gif",
+    "assets/previews/pet-idle.png",
+    "assets/previews/NOTICE.md",
     "skills",
     "gemini-extension.json"
   ],

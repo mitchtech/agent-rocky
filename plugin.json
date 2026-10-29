@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "rocky",
-  "version": "0.1.0",
-  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!",
+  "version": "0.2.0",
+  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, and an animated Codex pet. Amaze amaze amaze!",
   "author": {
     "name": "Michael J. Mitchell",
     "email": "michael@mitchtech.net",
@@ -28,7 +28,7 @@
       "hooks": "./hooks/codex.json",
       "interface": {
         "displayName": "Agent Rocky",
-        "shortDescription": "Rocky sounds for agents, plus a Codex pet slot",
+        "shortDescription": "Rocky sounds for agents, plus an animated Codex pet",
         "developerName": "Michael J. Mitchell",
         "category": "Productivity"
       }

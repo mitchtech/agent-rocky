@@ -1,4 +1,4 @@
-"""Derive preview artifacts from the committed clips; never change source audio or art."""
+"""Derive previews from committed clips and pet art; never change their sources."""
 
 import math
 import sys
@@ -194,6 +194,27 @@ draw = ImageDraw.Draw(touch, "RGBA")
 draw.rounded_rectangle((6, 6, 173, 173), radius=28, fill=DARK["surface"] + (255,), outline=PETROVA + (255,), width=4)
 mark(touch, (90, 96), 64, DARK["ink"])
 touch.convert("RGB").save(OUT / "touch-icon.png")
+
+# The plugin listing icon: the touch icon's mark at the 512 px the Claude plugin validator asks for.
+listing = Image.new("RGBA", (512, 512), DARK["bg"] + (255,))
+draw = ImageDraw.Draw(listing, "RGBA")
+draw.rounded_rectangle((17, 17, 494, 494), radius=80, fill=DARK["surface"] + (255,), outline=PETROVA + (255,), width=11)
+mark(listing, (256, 273), 182, DARK["ink"])
+listing.convert("RGB").save(OUT / "icon.png")
+
+# Pet previews come from the active v2 atlas, at the site's 160 ms frame rate.
+sheet_path = ROOT / "pets" / "rocky" / "spritesheet.webp"
+if sheet_path.exists():
+    with Image.open(sheet_path) as source:
+        sheet = source.convert("RGBA")
+    for name, row, count in [("idle", 0, 6), ("working", 7, 6), ("waiting", 6, 6), ("review", 8, 6), ("failure", 5, 8)]:
+        frames = []
+        for column in range(count):
+            canvas = Image.new("RGBA", (192, 208), DARK["surface"] + (255,))
+            canvas.alpha_composite(sheet.crop((column * 192, row * 208, (column + 1) * 192, (row + 1) * 208)))
+            frames.append(canvas.convert("RGB"))
+        frames[0].save(OUT / f"pet-{name}.gif", save_all=True, append_images=frames[1:], duration=160, loop=0, disposal=2)
+    sheet.crop((0, 0, 192, 208)).save(OUT / "pet-idle.png")
 
 
 def frames_of(path):

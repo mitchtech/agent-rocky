@@ -27,14 +27,14 @@ alarms. `agent-rocky mute annoyed` removes the jokes. The Eridian-only config in
 `docs/sounds.md` drops the English entirely.
 
 **Where's the Codex pet?**
-The installer and packaging ship now; the art comes later. `agent-rocky pet
-status` reports `not-bundled` until then.
+The original Rocky artwork is bundled. Run `agent-rocky pet install`, then
+select Rocky in a compatible Codex host. Sounds and pet installation are independent.
 
 **Why not Grace's lines too?**
 Rocky is the character people want to hear. Grace's voice would also make cues
 harder to tell apart from real speech around you.
 
-**Does it work with Navi, Johnny 5, or Warcraft installed?**
+**Does it work with Navi, Johnny 5, Warcraft, Star Wars, or StarCraft installed?**
 Yes, but they all respond to the same events. Enable one per host.
 
 **Does it send telemetry?**
