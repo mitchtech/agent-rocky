@@ -12,7 +12,7 @@ const html = readFileSync(join(out, 'index.html'), 'utf8').replaceAll('__VERSION
 writeFileSync(join(out, 'index.html'), html);
 cpSync(join(root, 'audio'), join(out, 'audio'), { recursive: true });
 cpSync(join(root, 'assets', 'previews'), join(out, 'previews'), { recursive: true });
-// The pet ships as a manifest-only stub until its art lands; the site shows it once the sheet exists.
+// Keep source builds compatible with packages that omit optional pet artwork.
 if (existsSync(join(root, 'pets', 'rocky', 'spritesheet.webp'))) cpSync(join(root, 'pets', 'rocky'), join(out, 'pet'), { recursive: true });
 if (existsSync(join(root, 'assets', 'exports'))) cpSync(join(root, 'assets', 'exports'), join(out, 'exports'), { recursive: true });
 console.log(`Built site: ${out}`);

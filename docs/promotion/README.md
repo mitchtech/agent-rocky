@@ -45,7 +45,7 @@ project is free to try, and invite one specific piece of feedback. Do not imply
 every host has identical events, that the destructive-command cue is a safety
 feature, or that a sound proves the agent completed a task successfully. Do
 not use film stills, posters, or trailer footage in posts; the spectrum preview
-and the site are the visuals. Do not promise a Codex pet date.
+and original pet artwork are the visuals. The optional Codex pet installs independently.
 
 ## Launch checks
 
