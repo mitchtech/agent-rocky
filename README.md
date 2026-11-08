@@ -34,7 +34,7 @@
 Rocky sound notifications for coding agents, from *Project Hail Mary*. Native
 sound integrations for **Claude Code**, **Codex**, and **Gemini CLI**, plus a
 small event interface for other agents and scripts. One shared player supports
-macOS, Linux, and Windows. A Codex pet slot ships ready for Rocky's art.
+macOS, Linux, and Windows. An optional animated Rocky pet ships for Codex.
 
 Agent Rocky plays 44 clips on agent events: 38 of Rocky's lines from the film
 and 6 untranslated Eridian chords.
@@ -63,7 +63,7 @@ A sibling of [Agent Navi](https://github.com/mitchtech/agent-navi),
 |---|---|---|
 | Sounds | [Agent plugin](#install) or standalone CLI | Node.js 22+ and local audio |
 | Astrophage meter | [Status line command](#astrophage-meter-and-usage-alarms) | Claude Code status line |
-| Codex pet | [Coming soon](#codex-pet-coming-soon) | A host with compatible custom pets |
+| Codex pet | [Install Rocky](#codex-pet) | A host with compatible custom pets |
 
 Installing the sound plugin never installs or selects a pet, and never changes
 your status line.
@@ -159,13 +159,23 @@ All commands also work as `node /path/to/agent-rocky/scripts/rocky.mjs ...`.
 Standalone `play` and `preview` wait for the short clip; native hooks dispatch
 playback to a detached worker so the agent can continue immediately.
 
-## Codex pet (coming soon)
+## Codex pet
 
-The Rocky Codex pet is not bundled yet. The installer, validation, and release
-packaging are in place, so the pet will arrive in a release without changing
-how anything else works. Until then, `agent-rocky pet status` reports
-`not-bundled` and `agent-rocky pet install` changes nothing. Codex's native
-pet feature can create a companion in the meantime. See [pets](docs/pets.md).
+![Rocky idle animation](assets/previews/pet-idle.gif)
+
+Rocky's original five-limbed stone artwork includes nine animations and sixteen
+look directions. Install the pet independently from sound hooks:
+
+```bash
+agent-rocky pet install
+agent-rocky doctor --pet
+```
+
+Then select Rocky in the desktop pet picker or enter `/pets Rocky` in a
+supported Codex CLI terminal. Installation never changes your selected pet.
+A standalone pet ZIP and a separate nine-row web atlas are included in
+releases. See the [pet guide](docs/pets.md) for installation, web upload,
+[artwork provenance](pets/rocky/NOTICE.md), and [CC BY 4.0 credit](pets/rocky/LICENSE.txt).
 
 ## Sounds
 
@@ -408,7 +418,7 @@ Tests simulate players. They cover:
 - the annoyed window and usage alarms
 - the Astrophage meter and its once-per-session cues
 - easter eggs, configuration, deduplication, and overlap
-- the manifest-only pet stub
+- real-art pet installation plus fixture-isolated conflict and missing-art behavior
 - failures, paths with spaces, and packaging
 
 CI runs Node 22 and 24 on macOS, Linux, and Windows. See
@@ -430,7 +440,7 @@ the project workflow.
 - Sibling projects: [Agent Navi](https://github.com/mitchtech/agent-navi), [Agent Johnny 5](https://github.com/mitchtech/agent-johnny5), and [Agent Warcraft](https://github.com/mitchtech/agent-warcraft).
 - Original plugin inspiration: [thephw/claude-meseeks](https://github.com/thephw/claude-meseeks).
 
-Code and configuration: [MIT](LICENSE). Film audio is excluded from the
+Code and configuration: [MIT](LICENSE). Original pet artwork: [CC BY 4.0](pets/rocky/LICENSE.txt). Film audio is excluded from the
 license; see the [audio rights notice](audio/NOTICE.md). Third-party character
 rights and trademarks remain with their owners. This is a fan project, not
 affiliated with or endorsed by Andy Weir, Amazon MGM Studios, or the film's

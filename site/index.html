@@ -19,6 +19,7 @@
   <link rel="apple-touch-icon" href="previews/touch-icon.png">
   <link rel="preload" href="fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="pet/spritesheet.webp" as="image" type="image/webp">
   <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
@@ -90,13 +91,19 @@
     <section class="pet-section" id="pet" aria-labelledby="pet-title"><div class="wrap pet-grid">
       <div class="pet-copy">
         <p class="eyebrow">Codex pet</p>
-        <h2 id="pet-title">Rocky is <em>building it.</em></h2>
-        <p>A native Rocky pet for Codex desktop and Codex CLI is on the way. The installer, validation, and release packaging already ship, so the pet will arrive in a release without changing how anything else works.</p>
-        <p>Until then, <code>agent-rocky pet status</code> reports <code>not-bundled</code> and <code>agent-rocky pet install</code> changes nothing. Codex's native pet feature can make you a companion in the meantime. Pets and sounds stay independent either way.</p>
-        <div class="actions"><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/pets.md">Pet guide <span aria-hidden="true">↗</span></a></div>
+        <h2 id="pet-title">Your own <em>Eridian engineer.</em></h2>
+        <p>Five stone limbs, nine animations, and sixteen look directions. Rocky waves, works, waits for your input, and checks the result while Codex drives his activity.</p>
+        <p>Install him independently with <code>agent-rocky pet install</code>, then select Rocky in the desktop pet picker or a supported Codex CLI terminal. Sounds and pets stay independent.</p>
+        <div class="actions"><a class="button primary" href="#pet-install">Install Rocky <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/mitchtech/agent-rocky/blob/main/docs/pets.md">Pet guide <span aria-hidden="true">↗</span></a></div>
+        <p class="fineprint"><a href="exports/agent-rocky-pet-web.webp" download>Download the web atlas</a> for a separate account upload. Original artwork: <a href="pet/NOTICE.md">CC BY 4.0</a>.</p>
       </div>
       <figure class="pet-stage">
-        <div class="stage-frame"><svg class="sigil huge" viewBox="0 0 64 64" role="img" aria-label="A pentagonal Eridian mark, standing in for the pet"><use href="#carapace"/></svg><p class="stage-note">Coming soon</p></div>
+        <div class="stage-frame"><div id="stage-sprite" class="sprite big" role="img" aria-label="Rocky, a five-limbed Eridian engineer with a pentagonal stone shell"></div></div>
+        <figcaption><output id="state-label">Rocky is idle</output><button id="motion-toggle" class="copy" aria-pressed="false">Pause animation</button></figcaption>
+        <div class="state-group" role="group" aria-label="Animations">
+          <button data-state="idle" aria-pressed="true">Idle</button><button data-state="working" aria-pressed="false">Working</button><button data-state="waiting" aria-pressed="false">Waiting</button><button data-state="review" aria-pressed="false">Review</button><button data-state="failure" aria-pressed="false">Blocked</button><button data-state="moving-right" aria-pressed="false">Move right</button><button data-state="moving-left" aria-pressed="false">Move left</button><button data-state="waving" aria-pressed="false">Wave</button><button data-state="jumping" aria-pressed="false">Jump</button>
+        </div>
+        <details class="look-group"><summary>Sixteen look directions</summary><div role="group" aria-label="Look directions"><button data-state="look-0" aria-pressed="false">Up</button><button data-state="look-1" aria-pressed="false">Up-right 1</button><button data-state="look-2" aria-pressed="false">Up-right 2</button><button data-state="look-3" aria-pressed="false">Up-right 3</button><button data-state="look-4" aria-pressed="false">Right</button><button data-state="look-5" aria-pressed="false">Down-right 1</button><button data-state="look-6" aria-pressed="false">Down-right 2</button><button data-state="look-7" aria-pressed="false">Down-right 3</button><button data-state="look-8" aria-pressed="false">Down</button><button data-state="look-9" aria-pressed="false">Down-left 1</button><button data-state="look-10" aria-pressed="false">Down-left 2</button><button data-state="look-11" aria-pressed="false">Down-left 3</button><button data-state="look-12" aria-pressed="false">Left</button><button data-state="look-13" aria-pressed="false">Up-left 1</button><button data-state="look-14" aria-pressed="false">Up-left 2</button><button data-state="look-15" aria-pressed="false">Up-left 3</button></div></details>
       </figure>
     </div></section>
 
@@ -138,7 +145,9 @@ codex plugin add rocky@agent-rocky</code></pre></div>
       <p class="fineprint">Review and trust the sound hooks in Codex's hook settings. Running Agent Navi, Agent Johnny 5, or Agent Warcraft too? Enable one per host so a fairy, a robot, a peon, and an Eridian do not talk over each other. <a href="https://github.com/mitchtech/agent-rocky/blob/main/README.md#other-agents">Other agents use the standalone event interface.</a></p>
       </div>
       <div id="pet-install" class="pet-install">
-        <div class="install-panel pet-card"><p class="eyebrow">Codex pet</p><h3>Coming soon</h3><p>The installer, validation, and packaging are ready; the art is not. Until it ships, <code>agent-rocky pet status</code> reports <code>not-bundled</code> and Codex's native pet feature can make you a companion. <a href="https://github.com/mitchtech/agent-rocky/releases">Watch the releases</a> for the pet.</p></div>
+        <div class="command pet-card"><div class="command-head"><h3>Install the Codex pet</h3><button class="copy" data-copy="pet-command" aria-label="Copy pet install command">Copy</button></div><pre id="pet-command"><code>npm install -g github:mitchtech/agent-rocky
+agent-rocky pet install
+agent-rocky doctor --pet</code></pre><p class="fineprint">These commands install the CLI and pet without enabling sound hooks. Prefer a standalone bundle? <a href="https://github.com/mitchtech/agent-rocky/releases/latest/download/agent-rocky-pet.zip">Download the pet ZIP</a> and extract its <code>rocky</code> directory into <code>~/.codex/pets/</code>. Then select Rocky in your host's pet picker. Installation never changes the selected pet.</p></div>
       </div>
       <div class="install-extra">
         <details class="install-panel"><summary>Sound controls</summary><pre id="control-command"><code>agent-rocky status

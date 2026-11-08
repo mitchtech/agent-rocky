@@ -100,8 +100,7 @@ audio to your local speakers. This plugin does not deploy a relay or service.
 ## Native pet compatibility
 
 Sounds and pets install independently. The `rocky` plugin registers sound
-hooks only. The Rocky pet ships as a manifest-only stub in this release; once
-its art lands, it installs through the pet CLI or a ZIP as a local custom pet
+hooks only. The Rocky v2 artwork installs through the pet CLI or a ZIP as a local custom pet
 without hook registration or avatar selection changes. The host drives its
 activity and animation.
 
@@ -115,10 +114,10 @@ activity and animation.
 | Other agents and scripts | Generic event interface | Depends on host; no adapter provided |
 | Headless or remote environments | Requires local audio access | No local display is implied |
 
-Asset validation checks the manifest now and the atlas's format, transparency,
-and cell occupancy once it exists. Installer tests run against the stub and a
-fixture bundle and check filesystem behavior rather than native rendering on
-every OS. See the [pet guide](pets.md).
+Asset validation checks the manifest, atlas format, transparency, cell occupancy,
+and exact web-export pixels. Installer tests exercise the real artwork and
+fixture-isolated missing-art/conflict behavior. They check filesystem behavior
+rather than native rendering on every OS. See the [pet guide](pets.md).
 
 ## Validation and support baseline
 

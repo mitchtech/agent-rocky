@@ -27,7 +27,7 @@ Release assets named `darwin.agent-rocky.zip`, `linux.agent-rocky.zip`, and
 `win32.agent-rocky.zip` contain identical portable code. Separate names let Gemini
 select the right extension when the release also contains npm and pet archives.
 They include the shared runtime, sound clips, portable control skill, and the
-pet manifest stub. Installing the extension never installs or selects a pet.
+Rocky pet bundle. Installing the extension never installs or selects a pet.
 
 ## Events and behavior
 

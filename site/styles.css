@@ -178,15 +178,19 @@ section { scroll-margin-top: 90px; }
 .state { font: 600 0.75rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; }
 .state.on { color: var(--teal); }
 
-/* Codex pet (coming soon) */
+/* Codex pet */
 .pet-section { padding-block: clamp(3.5rem, 8vw, 6rem); border-top: 1px solid var(--line); background: radial-gradient(ellipse at 75% 40%, color-mix(in srgb, var(--teal) 10%, transparent), transparent 60%); }
 .pet-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 .pet-copy > p:not(.eyebrow) { color: var(--muted); }
-.pet-stage { margin: 0; }
+.pet-stage { margin: 0; display: grid; gap: 0.8rem; }
 .stage-frame { display: grid; place-items: center; gap: 1rem; min-height: 320px; padding: 2rem 1rem; border: 1px dashed var(--line-strong); border-radius: calc(var(--radius) + 6px); background: radial-gradient(ellipse at 50% 55%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--surface); }
-.stage-frame .sigil { animation: drift 6s ease-in-out infinite; }
-@keyframes drift { 50% { transform: translateY(-8px) rotate(4deg); } }
-.stage-note { margin: 0; font: 600 0.78rem/1 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.sprite { --scale: 1.2; display: block; width: calc(192px * var(--scale)); height: calc(208px * var(--scale)); background: url("pet/spritesheet.webp") 0 0 / calc(1536px * var(--scale)) calc(2288px * var(--scale)) no-repeat; }
+.pet-stage figcaption { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.state-group, .look-group > div { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.state-group button, .look-group button { font: 600 0.85rem/1.2 var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.42rem 0.7rem; cursor: pointer; }
+.state-group button[aria-pressed="true"], .look-group button[aria-pressed="true"] { border-color: var(--teal); background: color-mix(in srgb, var(--teal) 18%, var(--surface)); }
+.look-group summary { cursor: pointer; color: var(--muted); font-weight: 600; margin-bottom: 0.5rem; }
+#motion-toggle:disabled { opacity: 0.6; cursor: default; }
 
 /* Destructive alarm */
 .alarm-section { background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 12%, var(--bg)), var(--bg)); border-block: 1px solid color-mix(in srgb, var(--danger) 45%, transparent); padding-block: clamp(3.5rem, 8vw, 6rem); }

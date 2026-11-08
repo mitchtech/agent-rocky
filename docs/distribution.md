@@ -42,7 +42,7 @@ python3 scripts/package-release.py
 
 Release assets include the versioned npm tarball, a stable `agent-rocky.tgz`
 alias, and three identically encoded platform-prefixed Gemini ZIPs. Versioned
-and stable pet ZIPs join them automatically once the pet art exists.
+and stable pet ZIPs plus the nine-row web atlas are included.
 `SHA256SUMS` covers every attached artifact. ZIP order, timestamps, permissions,
 and extracted source bytes are checked.
 

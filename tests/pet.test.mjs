@@ -29,18 +29,19 @@ async function packaged(root, files = ['pet.json', 'spritesheet.webp', 'LICENSE.
   return { ...module, bundle: join(copy, 'pets', 'rocky'), script: join(copy, 'scripts', 'rocky.mjs') };
 }
 
-test('the repository pet is a stub: status reports not-bundled and install changes nothing', t => {
+test('the repository pet installs the real artwork as an independent v2 bundle', t => {
   const { env, target } = fixture(t);
-  assert.equal(petStatus(env).state, 'not-bundled');
-  assert.throws(() => installPet(env), /not bundled yet/);
+  assert.equal(petStatus(env).state, 'not-installed');
+  assert.equal(installPet(env).changed, true);
+  assert.equal(petStatus(env).state, 'matching');
+  assert.equal(petStatus(env).spriteVersionNumber, 2);
+  for (const name of ['pet.json', 'spritesheet.webp', 'LICENSE.txt', 'NOTICE.md']) {
+    assert.deepEqual(readFileSync(join(target, name)), readFileSync(join(ROOT, 'pets', 'rocky', name)));
+  }
+  assert.equal(installPet(env).changed, false);
+  assert.equal(existsSync(join(env.CODEX_HOME, 'config.toml')), false);
+  assert.equal(uninstallPet(env).changed, true);
   assert.equal(existsSync(target), false);
-  assert.equal(uninstallPet(env).changed, false);
-  mkdirSync(target, { recursive: true });
-  writeFileSync(join(target, 'personal.txt'), 'keep');
-  assert.equal(petStatus(env).state, 'not-bundled');
-  assert.throws(() => installPet(env, true), /not bundled yet/);
-  assert.throws(() => uninstallPet(env), /unmanaged/);
-  assert.deepEqual(readdirSync(target), ['personal.txt']);
 });
 
 test('pet commands take no pet name', t => {
