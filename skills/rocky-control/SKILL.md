@@ -11,11 +11,13 @@ description: >-
   "enable subagent sounds", "enable tool failure sounds", "enable compaction sounds",
   "turn on session end sounds", "Eridian only", "only the chords", "no English lines",
   "astrophage alarm", "not enough sound", "set a fuel budget", "set an astrophage budget",
-  "statusline astrophage meter", "preview a Rocky sound", "play fist my bump",
+  "statusline astrophage meter", "memory gauge", "context full sound", "preview a Rocky sound", "play fist my bump",
   "play we die we die we die", or asks to inspect or adjust Agent Rocky notifications.
   DO NOT TRIGGER when: the user wants operating system volume controls, unrelated
   notification settings, Agent Navi controls (use navi-control), Agent Johnny 5
   controls (use johnny5-control), Agent Warcraft controls (use warcraft-control),
+  Agent Star Wars controls (use starwars-control), Agent StarCraft controls (use
+  starcraft-control),
   pet artwork, or pet selection through the host picker.
 ---
 
@@ -45,6 +47,7 @@ into the corresponding event:
 | Rate limit, billing, or budget exhausted ("Not enough. Not enough.") | `out_of_astrophage` |
 | Status-line low-fuel warning ("How much Astrophage you need, question?") | `astrophage_low` |
 | Output token limit ("Too much! Too much! Too much!") | `out_of_xenonite` |
+| Status-line context-full warning ("Rocky can't forget") | `memory_full` |
 | Other API errors ("Bad, bad, bad") | `error` |
 | Failed tool calls ("Could not fix") | `tool_failed` |
 | Subagents starting ("Grace Rocky save stars") | `subagent_started` |
@@ -62,7 +65,7 @@ file without being asked.
 
 The Astrophage meter is a status-line command, not a hook. When asked to set it
 up or to set a budget, explain the `astrophage.budgetUsd` and
-`astrophage.lowPercent` settings in the config file and the `statusline`
+`astrophage.lowPercent` settings (and `memory.lowPercent` for the memory gauge) in the config file and the `statusline`
 command documented in `docs/budget.md`, and show the user the line to add. Do
 not edit the host's settings or status line yourself.
 

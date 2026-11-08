@@ -61,7 +61,7 @@ renderPet();
 // Each cue tints the spectrum: Tau Ceti gold for success, Astrophage red for alarms, xenonite teal for greetings.
 const MOODS = {
   session_started: 'greet', prompt_submitted: 'work', annoyed: 'alarm', approval_required: 'question', input_required: 'question',
-  ready_for_input: 'hum', turn_completed: 'success', out_of_astrophage: 'alarm', astrophage_low: 'warn', out_of_xenonite: 'warn', error: 'alarm',
+  ready_for_input: 'hum', turn_completed: 'success', out_of_astrophage: 'alarm', astrophage_low: 'warn', out_of_xenonite: 'warn', memory_full: 'warn', error: 'alarm',
   tool_failed: 'alarm', subagent_started: 'greet', context_compacting: 'hum', session_ended: 'hum', 'easter-egg': 'success',
 };
 const mood = event => (event.includes('destructive') ? 'alarm' : MOODS[event.split(' ')[0]] || 'question');

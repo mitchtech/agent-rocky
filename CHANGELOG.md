@@ -2,8 +2,15 @@
 
 ## Unreleased
 
+## 0.2.0 - 2026-10-28
+
+Meet Rocky: an animated Codex pet, plus a memory gauge on the status line.
+
 - Bundle original Rocky v2 pet artwork with nine animations and sixteen look directions, a byte-preserved source PNG, lossless WebP, CC BY 4.0 provenance, and a nine-row web export.
 - Replace the site's pet placeholder with animation and look-direction controls, pause/reduced-motion support, and installation links. Add reproducible pet previews and exercise real artwork in installer/package checks.
+- Add a memory gauge to `agent-rocky statusline`: it shows context window use beside the Astrophage meter and plays `memory_full` ("Rocky can't forget.") once per rise past `memory.lowPercent` (85% by default). Ported from Agent StarCraft's supply meter.
+- Add a 512 px plugin listing icon.
+- Link the Agent Star Wars and Agent StarCraft sibling projects in the README, site, control skill, and promotion kit.
 
 ## 0.1.0 - 2026-10-24
 

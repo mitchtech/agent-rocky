@@ -18,6 +18,7 @@ Why each event plays what it plays, what else would fit, and how to change it.
 | `out_of_astrophage` | `not-enough`, `eridian-sad` | Rate limit or budget spent: the fuel is gone. |
 | `astrophage_low` | `how-much-astrophage` | The meter warning, asked as a question. |
 | `out_of_xenonite` | `too-much` | The reply ran past the output token limit. |
+| `memory_full` | `cant-forget` | The context window is nearly full; Rocky's memory is perfect, the agent's is not. |
 | `error` | `bad-bad-bad`, `eridian-sad` | Off by default. |
 | `tool_failed` | `could-not-fix`, `dirty-dirty-dirty` | Off by default; tool failures are frequent. |
 | `subagent_started` | `saves-stars`, `build-workshop`, `eridian-greet` | A crew member setting off. Off by default. |
@@ -62,6 +63,7 @@ chords in `~/.config/agent-rocky/config.json`:
     "out_of_astrophage": { "clips": ["eridian-sad"] },
     "astrophage_low": { "clips": ["eridian-sad"] },
     "out_of_xenonite": { "clips": ["eridian-alarm"] },
+    "memory_full": { "clips": ["eridian-hum"] },
     "error": { "clips": ["eridian-sad"] },
     "tool_failed": { "clips": ["eridian-sad"] },
     "subagent_started": { "clips": ["eridian-greet"] },

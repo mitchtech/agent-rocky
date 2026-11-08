@@ -1,4 +1,4 @@
-# Budget alarms and the Astrophage meter
+# Budget alarms, the Astrophage meter, and the memory gauge
 
 Agent Rocky has two ways to tell you that usage is running out: hook events
 when a turn has already failed, and an optional status-line meter that warns you
@@ -33,6 +33,8 @@ line command on stdin. It prints one line and exits.
 
 ```text
 ⬠ 62% astrophage (5h)
+⬠ 62% astrophage (5h) · 41% memory
+⬠ 90% memory full
 ⬠ 18% astrophage (7d) low
 ⬠ $1.25 astrophage low
 ⬠ 0% astrophage (spend) out
@@ -64,6 +66,19 @@ Each cue plays once per session per rise. When usage falls back, as when a
 5-hour window resets, the meter re-arms, and the next crossing plays again.
 Mute either with `agent-rocky mute astrophage_low` or `agent-rocky mute out_of_astrophage`.
 
+### Memory gauge
+
+When the status line input includes `context_window`, the meter appends how
+much of the context window is in use. It reads `context_window.used_percentage`,
+or computes it from `total_input_tokens` and `context_window_size`. Claude Code
+counts input tokens only.
+
+Crossing `memory.lowPercent` (default 85) plays `memory_full`: "Rocky can't
+forget." It plays once per session per rise and re-arms when use drops, as
+after compaction or `/clear`. When both meters rise in the same update, the
+Astrophage cue wins and the memory cue waits for the next update. Mute it with
+`agent-rocky mute memory_full`.
+
 ### Setup
 
 The status line runs outside the plugin, so it needs the standalone command:
@@ -92,13 +107,14 @@ printf '%s  %s\n' "$mine" "$fuel"
 ### Settings
 
 ```json
-{ "astrophage": { "budgetUsd": 20, "lowPercent": 75 } }
+{ "astrophage": { "budgetUsd": 20, "lowPercent": 75 }, "memory": { "lowPercent": 90 } }
 ```
 
 | Setting | Default | Meaning |
 |---|---|---|
 | `astrophage.budgetUsd` | `null` | Per-session dollar budget, or `null` to use rate limits only |
 | `astrophage.lowPercent` | `80` | Percent used at which `astrophage_low` plays; between 0 and 100 |
+| `memory.lowPercent` | `85` | Percent of the context window at which `memory_full` plays; between 0 and 100 |
 
-The meter stores one fuel level per session under a hashed name in the state
+The meter stores one fuel level and one memory level per session under a hashed name in the state
 directory. Nothing about your usage or cost is written anywhere else.

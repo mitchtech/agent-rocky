@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { configuration, dangerous, DEFAULTS, escalate, fuel, fuelCue, locations, normalize, playback, player, reserve, status, updateConfiguration } from '../scripts/rocky.mjs';
+import { configuration, dangerous, DEFAULTS, escalate, fuel, locations, memory, meterCue, normalize, playback, player, reserve, status, updateConfiguration } from '../scripts/rocky.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SCRIPT = join(ROOT, 'scripts', 'rocky.mjs');
@@ -60,7 +60,7 @@ test('config preserves defaults, merges event overrides, and resolves user audio
 
 test('invalid config and invalid sound names are rejected by diagnostics', t => {
   const f = fixture(t);
-  for (const value of [[], { unknown: true }, { muted: 'yes' }, { cooldownMs: -1 }, { events: null }, { events: { unknown: {} } }, { events: { session_started: { clips: [] } } }, { events: { session_started: { clips: ['../outside'] } } }, { events: { session_started: { enabled: 'yes' } } }, { events: { approval_required: { dangerClips: ['nope'] } } }, { easterEgg: null }, { easterEgg: { chance: 2 } }, { easterEgg: { chance: -0.1 } }, { easterEgg: { clips: [] } }, { easterEgg: { rate: 0.5 } }, { faction: 'horde' }, { astrophage: null }, { astrophage: { budgetUsd: 0 } }, { astrophage: { lowPercent: 100 } }, { astrophage: { cap: 1 } }, JSON.parse('{"events":{"__proto__":{"enabled":true}}}')]) {
+  for (const value of [[], { unknown: true }, { muted: 'yes' }, { cooldownMs: -1 }, { events: null }, { events: { unknown: {} } }, { events: { session_started: { clips: [] } } }, { events: { session_started: { clips: ['../outside'] } } }, { events: { session_started: { enabled: 'yes' } } }, { events: { approval_required: { dangerClips: ['nope'] } } }, { easterEgg: null }, { easterEgg: { chance: 2 } }, { easterEgg: { chance: -0.1 } }, { easterEgg: { clips: [] } }, { easterEgg: { rate: 0.5 } }, { faction: 'horde' }, { astrophage: null }, { astrophage: { budgetUsd: 0 } }, { astrophage: { lowPercent: 100 } }, { astrophage: { cap: 1 } }, { memory: null }, { memory: { lowPercent: 0 } }, { memory: { cap: 1 } }, JSON.parse('{"events":{"__proto__":{"enabled":true}}}')]) {
     writeFileSync(f.env.AGENT_ROCKY_CONFIG, JSON.stringify(value));
     assert.throws(f.settings);
   }
@@ -428,7 +428,7 @@ test('StopFailure types, quota notifications, subagent starts, and tool failures
   assert.equal(normalize({ hook_event_name: 'PostToolUseFailure', tool_name: 'Bash', is_interrupt: true }, 'claude'), null);
   assert.equal(normalize({ hook_event_name: 'PostToolUseFailure', tool_name: 'Bash' }, 'codex'), null);
   assert.equal(normalize({ hook_event_name: 'AfterTool', tool_response: { error: 'x' } }, 'gemini'), null);
-  for (const event of ['out_of_astrophage', 'out_of_xenonite', 'astrophage_low', 'annoyed', 'turn_completed']) assert.equal(DEFAULTS.events[event].enabled, true, event);
+  for (const event of ['out_of_astrophage', 'out_of_xenonite', 'astrophage_low', 'memory_full', 'annoyed', 'turn_completed']) assert.equal(DEFAULTS.events[event].enabled, true, event);
   for (const event of ['tool_failed', 'subagent_started']) assert.equal(DEFAULTS.events[event].enabled, false, event);
 });
 
@@ -457,15 +457,15 @@ test('Astrophage meter reads the tightest limit and cues each rise once per sess
   const config = structuredClone(DEFAULTS);
   assert.equal(fuel({}, config), null);
   assert.equal(fuel({ cost: { total_cost_usd: 3 } }, config), null);
-  assert.deepEqual(fuel({ rate_limits: { five_hour: { used_percentage: 50 } } }, config), { label: '5h', percent: 50, level: 0, text: '⬠ 50% astrophage (5h)' });
+  assert.deepEqual(fuel({ rate_limits: { five_hour: { used_percentage: 50 } } }, config), { kind: 'astrophage', label: '5h', percent: 50, level: 0, text: '50% astrophage (5h)' });
   const low = fuel({ rate_limits: { five_hour: { used_percentage: 20 }, seven_day: { used_percentage: 85.4 } } }, config);
-  assert.equal(low.text, '⬠ 15% astrophage (7d) low');
+  assert.equal(low.text, '15% astrophage (7d) low');
   config.astrophage.budgetUsd = 10;
-  assert.equal(fuel({ cost: { total_cost_usd: 9 }, rate_limits: { five_hour: { used_percentage: 40 } } }, config).text, '⬠ $1.00 astrophage low');
-  assert.equal(fuel({ cost: { total_cost_usd: 12 } }, config).text, '⬠ $0.00 astrophage out');
+  assert.equal(fuel({ cost: { total_cost_usd: 9 }, rate_limits: { five_hour: { used_percentage: 40 } } }, config).text, '$1.00 astrophage low');
+  assert.equal(fuel({ cost: { total_cost_usd: 12 } }, config).text, '$0.00 astrophage out');
   const f = fixture(t);
   const { paths } = f.settings();
-  const at = level => fuelCue({ level }, 'session', paths);
+  const at = level => meterCue({ kind: 'astrophage', level }, 'session', paths);
   assert.equal(at(0), null);
   assert.equal(at(1), 'astrophage_low');
   assert.equal(at(1), null);
@@ -473,7 +473,29 @@ test('Astrophage meter reads the tightest limit and cues each rise once per sess
   assert.equal(at(2), null);
   assert.equal(at(0), null);
   assert.equal(at(2), 'out_of_astrophage');
-  assert.equal(fuelCue({ level: 1 }, 'other', paths), 'astrophage_low');
+  assert.equal(meterCue({ kind: 'astrophage', level: 1 }, 'other', paths), 'astrophage_low');
+});
+
+test('memory meter shows context use and cues once until the context drops', t => {
+  const config = structuredClone(DEFAULTS);
+  assert.equal(memory({}, config), null);
+  assert.equal(memory({ context_window: { used_percentage: null } }, config), null);
+  assert.deepEqual(memory({ context_window: { used_percentage: 42 } }, config), { kind: 'memory', percent: 42, level: 0, text: '42% memory' });
+  assert.equal(memory({ context_window: { total_input_tokens: 180000, context_window_size: 200000 } }, config).text, '90% memory full');
+  assert.equal(memory({ context_window: { used_percentage: 130 } }, config).text, '100% memory full');
+  config.memory.lowPercent = 95;
+  assert.equal(memory({ context_window: { used_percentage: 90 } }, config).level, 0);
+  const f = fixture(t);
+  const { paths } = f.settings();
+  const at = level => meterCue({ kind: 'memory', level }, 'session', paths);
+  assert.equal(at(1), 'memory_full');
+  assert.equal(at(1), null);
+  assert.equal(at(0), null);
+  assert.equal(at(1), 'memory_full');
+  // The two meters keep separate levels within one session.
+  assert.equal(meterCue({ kind: 'astrophage', level: 1 }, 'session', paths), 'astrophage_low');
+  writeFileSync(f.env.AGENT_ROCKY_CONFIG, JSON.stringify({ memory: { lowPercent: 100 } }));
+  assert.throws(() => configuration(f.env), /memory/);
 });
 
 test('statusline always prints one line and exits cleanly, even on bad input', t => {
@@ -483,6 +505,9 @@ test('statusline always prints one line and exits cleanly, even on bad input', t
   const ok = run(JSON.stringify({ session_id: 's', rate_limits: { five_hour: { used_percentage: 90 } } }));
   assert.equal(ok.status, 0);
   assert.equal(ok.stdout, '⬠ 10% astrophage (5h) low\n');
+  const both = run(JSON.stringify({ session_id: 's', rate_limits: { five_hour: { used_percentage: 18 } }, context_window: { used_percentage: 71 } }));
+  assert.equal(both.stdout, '⬠ 82% astrophage (5h) · 71% memory\n');
+  assert.equal(run(JSON.stringify({ context_window: { used_percentage: 90 } })).stdout, '⬠ 90% memory full\n');
   for (const input of ['', 'bad json', '[]', '{}']) {
     const result = run(input);
     assert.equal(result.status, 0);

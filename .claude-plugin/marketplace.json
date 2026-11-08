@@ -1,6 +1,6 @@
 {
   "name": "agent-rocky",
-  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!",
+  "description": "Rocky (Project Hail Mary) sound notifications for coding agents, and an animated Codex pet. Amaze amaze amaze!",
   "owner": {
     "name": "mitchtech",
     "url": "https://github.com/mitchtech"
@@ -9,7 +9,7 @@
     {
       "name": "rocky",
       "source": "./",
-      "description": "Rocky (Project Hail Mary) sound notifications for coding agents, with a Codex pet slot. Amaze amaze amaze!"
+      "description": "Rocky (Project Hail Mary) sound notifications for coding agents, and an animated Codex pet. Amaze amaze amaze!"
     }
   ]
 }
