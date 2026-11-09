@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.2.1 - 2026-11-08
+
+- Update development-only Pillow to 13.0.0 to resolve decoder security advisories. Revalidate pet atlases, web exports, and generated previews; sound runtimes remain dependency-free.
+
 ## 0.2.0 - 2026-10-28
 
 Meet Rocky: an animated Codex pet, plus a memory gauge on the status line.
